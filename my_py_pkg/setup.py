@@ -26,6 +26,8 @@ setup(
         'console_scripts': [
             'py_log = my_py_pkg.py_log:main',
             'robot_news_station = my_py_pkg.robot_news_station:main',
+            "add_two_ints_server = my_py_pkg.add_two_ints_server:main",
+            "add_two_ints_client_no_oop = my_py_pkg.add_two_ints_client_no_oop:main"
         ],
     },
 )
