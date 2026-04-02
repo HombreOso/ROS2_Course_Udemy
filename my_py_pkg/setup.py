@@ -25,6 +25,7 @@ setup(
     entry_points={
         'console_scripts': [
             'py_log = my_py_pkg.py_log:main',
+            'robot_news_station = my_py_pkg.robot_news_station:main',
         ],
     },
 )
