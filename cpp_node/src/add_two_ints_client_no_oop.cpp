@@ -1,0 +1,45 @@
+#include "rclcpp/rclcpp.hpp"
+#include "example_interfaces/srv/add_two_ints.hpp"
+
+using namespace std::chrono_literals;
+
+int main(int argc, char **argv)
+{
+    // initialize ROS2 communication
+    rclcpp::init(argc, argv);
+    // create a SHared Pointer for the Node
+    auto node = std::make_shared<rclcpp::Node>("add_two_ints_client_no_oop"); // MODIFY NAME
+    // register a service client in the node
+    // interface type (example_interfaces::srv::AddTwoInts) 
+    // and service name ("add_two_ints") 
+    // are to be specified
+    auto client = node->create_client<example_interfaces::srv::AddTwoInts>("add_two_ints");
+
+    // wait until the service is available
+    // the loop is quit as soon as the service is available (server has started)
+    while (!client->wait_for_service(1s))
+    {
+        RCLCPP_WARN(node->get_logger(), "Waiting for the Service to be available...");
+    }
+
+    // build a request
+    auto request = std::make_shared<example_interfaces::srv::AddTwoInts::Request>();
+    request->a = 9;
+    request->b = 7;
+
+    // send the request
+    auto response_future = client->async_send_request(request);
+
+    // spin until the response is received
+    rclcpp::spin_until_future_complete(node, response_future);
+
+    // process the response
+    auto response = response_future.get();
+    RCLCPP_INFO(node->get_logger(), "%d + %d = %d", (int)request->a, (int)request->b, (int)response->sum);
+
+    // shutdown the Node
+    rclcpp::shutdown();
+
+    // standard return of the main() function in C++
+    return 0;
+}
