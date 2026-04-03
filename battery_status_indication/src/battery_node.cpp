@@ -38,9 +38,12 @@ private:
     void callSetLed(bool led_states[3])
     {
         // wait fo the service to be available
-        while(! set_led_client_->wait_for_service(1s))
+        while (rclcpp::ok() && !set_led_client_->wait_for_service(1s))
         {
             RCLCPP_WARN(this->get_logger(), "Waiting for service to be available...");
+        }
+        if (!rclcpp::ok()) {
+            return;
         }
 
         // build a request
