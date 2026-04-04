@@ -1,0 +1,15 @@
+/robot_news_station_C3P0:
+  ros__parameters:
+    robot_name: "C3PO"
+
+/robot_news_station_R2D2:
+  ros__parameters:
+    robot_name: "R2D2"
+
+/robot_news_station_R4D4:
+  ros__parameters:
+    robot_name: "R4D4"
+
+/robot_news_station_BB8:
+  ros__parameters:
+    robot_name: "BB8"
