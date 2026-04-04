@@ -93,10 +93,11 @@ private:
         const auto & request = request_response_pair.first;
         RCLCPP_INFO(
             this->get_logger(),
-            "LED states set to: %s, %s, %s",
-            request->led_states_set_points[0]?"ON":"OFF",
-            request->led_states_set_points[1]?"ON":"OFF",
-            request->led_states_set_points[2]?"ON":"OFF");
+            "Battery is %s, LED states set to: %s, %s, %s",
+            battery_is_discharged?"discharged":"charged",
+            led_panel_state[0]?"ON":"OFF",
+            led_panel_state[1]?"ON":"OFF",
+            led_panel_state[2]?"ON":"OFF");
     }
 
 
