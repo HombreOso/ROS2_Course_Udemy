@@ -1,7 +1,6 @@
 #include "rclcpp/rclcpp.hpp"
 #include "my_robot_interfaces/msg/led_panel_state.hpp"
 #include "my_robot_interfaces/srv/set_led.hpp"
-#include <algorithm>
 
 using namespace std::placeholders;
     
@@ -36,9 +35,9 @@ private:
     void publishLedPanelState()
     {
         auto msg = my_robot_interfaces::msg::LedPanelState();
-        std::copy(led_panel_state, led_panel_state + 3, msg.led_panel_state.begin());
+        std::copy(led_panel_state, led_panel_state + 3, msg.led_panel_state);
         led_panel_state_publisher_->publish(msg);
-    }   
+    }
 
 
     rclcpp::Service<my_robot_interfaces::srv::SetLed>::SharedPtr server_;
