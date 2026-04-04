@@ -11,6 +11,12 @@ class BatteryNode : public rclcpp::Node
 public:
     BatteryNode() : Node("battery")
     {
+        this->declare_parameter<int64_t>("time_to_discharge_the_battery", 6);
+        this->declare_parameter<int64_t>("time_to_recharge_the_battery", 2);
+        time_to_discharge_the_battery = std::chrono::seconds(
+            this->get_parameter("time_to_discharge_the_battery").as_int());
+        time_to_recharge_the_battery = std::chrono::seconds(
+            this->get_parameter("time_to_recharge_the_battery").as_int());
         set_led_client_ = this->create_client<my_robot_interfaces::srv::SetLed>("set_led");
         led_panel_state_subscriber_ = this->create_subscription<my_robot_interfaces::msg::LedPanelState>(
             "number", 
@@ -99,8 +105,8 @@ private:
     int64_t counter_ = 0;
     bool led_panel_state[3] = {false, false, false};
     bool battery_is_discharged = false;
-    const std::chrono::seconds time_to_discharge_the_battery = 6s;
-    const std::chrono::seconds time_to_recharge_the_battery = 2s;
+    std::chrono::seconds time_to_discharge_the_battery;
+    std::chrono::seconds time_to_recharge_the_battery;
     rclcpp::Client<my_robot_interfaces::srv::SetLed>::SharedPtr set_led_client_;
     rclcpp::Subscription<my_robot_interfaces::msg::LedPanelState>::SharedPtr led_panel_state_subscriber_;
     rclcpp::TimerBase::SharedPtr timer_;
