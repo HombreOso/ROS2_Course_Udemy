@@ -1,0 +1,6 @@
+# the name of the turtle to catch
+string name
+---
+# message if successful or not
+bool turtle_is_caught
+string message
